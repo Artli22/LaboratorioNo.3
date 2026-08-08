@@ -3,26 +3,14 @@ mod precedencia;
 mod reglas;
 mod shunting_yard;
 mod nodo;
+mod arbol;
 
 use std::fs;
-use nodo::Nodo;
 
 fn main() {
     println!("============================================");
     println!(" Conversión Infix a Postfix - Shunting Yard ");
     println!("============================================");
-
-
-    let nodo_a = Nodo::operando("a".to_string());
-    let nodo_b = Nodo::operando("b".to_string());
-
-    let nodo_or = Nodo::binario(
-        "|".to_string(),
-        nodo_a,
-        nodo_b,
-    );
-
-    println!("{:#?}", nodo_or);
 
     let contenido = match fs::read_to_string("expresionesRegulares.txt") {
         Ok(contenido) => contenido,
@@ -51,6 +39,7 @@ fn main() {
         match shunting_yard::convertir_a_postfix(expresion) {
             Ok(resultado) => {
                 println!("\nResultado:");
+
                 println!(
                     "Postfix antes de convertir + y ?: {}",
                     resultado.postfix_original
@@ -60,6 +49,20 @@ fn main() {
                     "Postfix final: {}",
                     resultado.postfix_convertido
                 );
+
+                match arbol::construir_arbol(
+                    &resultado.tokens_postfix
+                ) {
+                    Ok(arbol) => {
+                        println!("\nÁrbol sintáctico:");
+                        println!("{:#?}", arbol);
+                    }
+
+                    Err(error) => {
+                        println!("\nError al construir el árbol:");
+                        println!("{}", error);
+                    }
+                }
             }
 
             Err(error) => {

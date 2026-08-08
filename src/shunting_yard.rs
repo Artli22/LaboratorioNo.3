@@ -5,6 +5,7 @@ use crate::reglas::{self, Token};
 pub struct ResultadoConversion {
     pub postfix_original: String,
     pub postfix_convertido: String,
+    pub tokens_postfix: Vec<String>,
 }
 
 pub fn convertir_a_postfix(
@@ -151,6 +152,7 @@ pub fn convertir_a_postfix(
     Ok(ResultadoConversion {
         postfix_original,
         postfix_convertido,
+        tokens_postfix: salida,
     })
 }
 
