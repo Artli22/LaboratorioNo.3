@@ -4,6 +4,7 @@ mod reglas;
 mod shunting_yard;
 mod nodo;
 mod arbol;
+mod diagrama;
 
 use std::fs;
 
@@ -53,10 +54,10 @@ fn main() {
                 match arbol::construir_arbol(
                     &resultado.tokens_postfix
                 ) {
-                    Ok(arbol) => {
+                        Ok(arbol) => {
                         println!("\nÁrbol sintáctico:");
-                        println!("{:#?}", arbol);
-                    }
+                        diagrama::mostrar_arbol(&arbol);
+                 }
 
                     Err(error) => {
                         println!("\nError al construir el árbol:");
